@@ -28,8 +28,10 @@ public class Hook extends BaseUtil {
 		if(scenario.isFailed()){
 			System.out.println(scenario.getName());
 			System.out.println("Closing the browser");
+			base.driver.quit();
+		}
+		else {
 			//base.driver.quit();
-
 		}
 	}
 }

@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -63,6 +64,8 @@ public class RegisterStep {
 	@And("^I enter email as \"([^\"]*)\"$") public void iEnterEmailAs(String email) throws Throwable {
 		WebElement emailEl = base.driver.findElement(By.id("email_create"));
 		WebElement btnCreateAccount = base.driver.findElement(By.id("SubmitCreate"));
+//		int random = new Random().nextInt(100);
+//		email = random + email;
 		UtilSelenium.moveToElementAndSend(emailEl, email, base.driver);
 		btnCreateAccount.click();
 	}
@@ -199,7 +202,7 @@ public class RegisterStep {
 		 * Submitting the form
 		 * @parma submitAccount
 		 */
-		//base.driver.findElement(By.id("submitAccount")).click();
+		base.driver.findElement(By.id("submitAccount")).click();
 	}
 
 	/**

@@ -72,6 +72,8 @@ public class Login extends BaseUtil {
 	}
 
 	@Then("^the user account should be displayed$") public void theUserAccountShouldBeDisplayed() throws Throwable {
-		WebElement element = base.driver.findElement(By.xpath(""));
+		WebDriverWait wait = new WebDriverWait(base.driver,10);
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#body-section > div > div.container.mt25.offset-0 > div > div.col-md-1.offset-0 > ul > li.active > a")));
+		Assert.assertTrue("Login is not successful",element.isDisplayed());
 	}
 }

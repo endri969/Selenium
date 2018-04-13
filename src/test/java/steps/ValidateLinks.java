@@ -23,7 +23,7 @@ public class ValidateLinks {
 		System.out.println("Total links are: "+links.size());
 		for(WebElement element : links){
 			String url = element.getAttribute("href");
-			UtilSelenium.verifyLinkActivate(url);
+			//UtilSelenium.verifyLinkActivate(url);
 		}
 	}
 }
