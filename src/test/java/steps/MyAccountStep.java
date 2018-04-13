@@ -7,10 +7,17 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import gherkin.lexer.Th;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,7 +45,7 @@ public class MyAccountStep {
 	 */
 	@Given("^I navigate to the automationpractice page$") public void iNavigateToTheAutomationpracticePage()
 			throws Throwable {
-		base.driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+		base.driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		base.driver.manage().window().maximize();
 		base.driver.navigate().to(UtilSelenium.AUTOMATION_PRACTICE);
 	}
@@ -113,6 +120,7 @@ public class MyAccountStep {
 		WebElement orderHistory =base.driver.findElement(By.xpath("//span[contains(text(),'Order')]"));
 		Thread.sleep(1000);
 		orderHistory.click();
+		Thread.sleep(1000);
 		goBack();
 	}
 
@@ -123,8 +131,8 @@ public class MyAccountStep {
 		/**
 		 * @param goBack
 		 */
-		WebElement goBack = base.driver.findElement(By.id("Back"));
-		goBack.click();
+		JavascriptExecutor js = (JavascriptExecutor) base.driver;
+		js.executeScript("window.history.go(-1)");
 	}
 
 	/**
@@ -132,8 +140,15 @@ public class MyAccountStep {
 	 * @throws Throwable
 	 */
 	@Then("^I navigate to my wishlist$") public void iNavigateToMyWishlist() throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		/**
+		 * WebElement for wishlist
+		 * @param whishList
+		 */
+		WebElement whishList =base.driver.findElement(By.xpath("//span[contains(text(),'My w')]"));
+		Thread.sleep(1000);
+		whishList.click();
+		Thread.sleep(1000);
+		goBack();
 	}
 
 	/**
@@ -141,8 +156,15 @@ public class MyAccountStep {
 	 * @throws Throwable
 	 */
 	@Then("^I navigate to my credit slips$") public void iNavigateToMyCreditSlips() throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		/**
+		 * WebElement for credit
+		 * @param credit
+		 */
+		WebElement credit =base.driver.findElement(By.xpath("//span[contains(text(),'credit')]"));
+		Thread.sleep(1000);
+		credit.click();
+		Thread.sleep(1000);
+		goBack();
 	}
 
 	/**
@@ -150,8 +172,15 @@ public class MyAccountStep {
 	 * @throws Throwable
 	 */
 	@Then("^I navigate to my address$") public void iNavigateToMyAddress() throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		/**
+		 * WebElement for address
+		 * @param address
+		 */
+		WebElement address =base.driver.findElement(By.xpath("//span[contains(text(),'address')]"));
+		Thread.sleep(1000);
+		address.click();
+		Thread.sleep(1000);
+		goBack();
 	}
 
 	/**
@@ -159,9 +188,99 @@ public class MyAccountStep {
 	 * @throws Throwable
 	 */
 	@Then("^I navigate to my personal information$") public void iNavigateToMyPersonalInformation() throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		/**
+		 * WebElement for address
+		 * @param personalInformation
+		 */
+		WebElement personalInformation =base.driver.findElement(By.xpath("//span[contains(text(),'personal')]"));
+		Thread.sleep(1000);
+		personalInformation.click();
+		Thread.sleep(1000);
+		goBack();
 	}
 
+	/**
+	 * Searching for an item
+	 * @param item
+	 * @throws Throwable
+	 */
+	@Then("^I search for \"([^\"]*)\"$") public void iSearchFor(String item) throws Throwable {
+		/**
+		 * WebElement for search
+		 * @param search
+		 */
+		WebElement search =base.driver.findElement(By.id("search_query_top"));
+		UtilSelenium.moveToElementAndSend(search,item,base.driver);
+		base.driver.findElement(By.xpath("//button[contains( text(),'')]")).click();
+	}
 
+	/**
+	 * Sorting price from high to low
+	 * @throws Throwable
+	 */
+	@Then("^I sort by the price from lowest to highest$") public void iSortByThePriceFromLowestToHighest()
+			throws Throwable {
+		/**
+		 * WebElement for dropdown to set the price
+		 * @param price
+		 */
+		Thread.sleep(1000);
+		Select price = new Select(base.driver.findElement(By.id("selectProductSort")));
+		price.selectByValue("price:asc");
+
+	}
+
+	/**
+	 * Adding item to the cart
+	 * @throws Throwable
+	 */
+	@Then("^I add to cart the first item$") public void iAddToCartTheFirstItem() throws Throwable {
+
+		WebElement firstProduct = base.driver.findElement(By.xpath("//a[@data-id-product='1']"));
+		firstProduct.click();
+	}
+
+	@And("^I proceed to checkout and pay by bank$") public void iProceedToCheckoutAndPayByBank() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(base.driver,10);
+		WebElement checkOut = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@title='Proceed to checkout']")));
+		checkOut.click();
+		Thread.sleep(1000);
+		List<WebElement> proceedToCheckOut =base.driver.findElements(By.xpath("//a[@title='Proceed to checkout']"));
+		UtilSelenium.moveToElementAndClick(proceedToCheckOut.get(1),base.driver);
+		proceedToCheckOut.get(1).click();
+
+		Thread.sleep(1000);
+		WebElement addressCheckout = base.driver.findElement(By.name("processAddress"));
+		addressCheckout.click();
+
+		WebElement agreeCheckBox = base.driver.findElement(By.name("cgv"));
+		agreeCheckBox.click();
+		Thread.sleep(1000);
+		WebElement shippingCheckout = base.driver.findElement(By.name("processCarrier"));
+		shippingCheckout.click();
+
+		Thread.sleep(1000);
+		WebElement payByBank = base.driver.findElement(By.cssSelector("#HOOK_PAYMENT > div:nth-child(1) > div > p > a"));
+		payByBank.click();
+
+		Thread.sleep(1000);
+		WebElement confirmOrder = base.driver.findElement(By.cssSelector("#cart_navigation > button"));
+		confirmOrder.click();
+
+		Thread.sleep(1000);
+		WebElement backToOrders = base.driver.findElement(By.cssSelector("#center_column > p > a"));
+		backToOrders.click();
+	}
+
+	@Then("^I add to cart item nr \"([^\"]*)\"$") public void iAddToCartItemNr(String number) throws Throwable {
+		Thread.sleep(1000);
+		WebElement item = base.driver.findElement(By.cssSelector("#center_column > ul > li:nth-child("+number+") > div > div.left-block > div"));
+		Actions actions = new Actions(base.driver);
+		actions.moveToElement(item);
+		actions.build().perform();
+		WebElement add = base.driver.findElement(By.xpath("//a[@data-id-product='"+number+"']"));
+		actions.moveToElement(add);
+		actions.click().build().perform();
+
+	}
 }

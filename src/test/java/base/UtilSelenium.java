@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,7 +13,7 @@ import java.net.URL;
 public class UtilSelenium {
 	public static final String PHPTRAVELS = "https://www.phptravels.net";
 	public static final String PHPTRAVELS_SINGIN = PHPTRAVELS+"/login";
-	public static final String AUTOMATION_PRACTICE = "http://automationpractice.com";
+	public static final String AUTOMATION_PRACTICE = "http://automationpractice.com/index.php";
 
 	public static void moveToElementAndSend(WebElement element, String message,WebDriver driver) {
 		Actions actions = new Actions(driver);
@@ -20,6 +21,13 @@ public class UtilSelenium {
 		actions.click();
 		actions.sendKeys(message);
 		actions.build().perform();
+	}
+	public static void moveToElementAndClick(WebElement element,WebDriver driver){
+		Actions actions = new Actions(driver);
+		actions.moveToElement(element);
+		actions.click();
+		actions.build().perform();
+
 	}
 	public static void highLightElement(WebDriver driver, WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
