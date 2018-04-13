@@ -47,6 +47,10 @@ public class RegisterStep {
 
 	@Then("^I navigate to register for the first time$") public void iNavigateAndRegisterForTheFirstTime()
 			throws Throwable {
+		/**
+		 * WebElement for Singin link
+		 * @param singIn
+		 */
 		WebElement singIn = base.driver.findElement(By.xpath(" //a[contains(text(),'Si')]"));
 		singIn.click();
 	}
