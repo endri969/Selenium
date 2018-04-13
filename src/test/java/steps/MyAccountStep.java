@@ -247,7 +247,6 @@ public class MyAccountStep {
 		Thread.sleep(1000);
 		List<WebElement> proceedToCheckOut =base.driver.findElements(By.xpath("//a[@title='Proceed to checkout']"));
 		UtilSelenium.moveToElementAndClick(proceedToCheckOut.get(1),base.driver);
-		proceedToCheckOut.get(1).click();
 
 		Thread.sleep(1000);
 		WebElement addressCheckout = base.driver.findElement(By.name("processAddress"));
