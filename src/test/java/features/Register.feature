@@ -3,7 +3,7 @@ Feature: Register automationpractice
   Scenario: I register an account to the page
     Given I navigate to the automation practice
     Then I navigate to register for the first time
-    And I enter email as "etest@gmail.com"
+    And I enter email as "asdasd@gmail.com"
     Then I enter the necessary information to create an account
       | Value                  | Fields                     |
       | Title                  | Mr.                        |
