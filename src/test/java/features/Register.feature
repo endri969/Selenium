@@ -7,17 +7,17 @@ Feature: Register automationpractice
     Then I enter the necessary information to create an account
       | Value                  | Fields                     |
       | Title                  | Mr.                        |
-      | First Name             | Endri                      |
-      | Last Name              | Zylali                     |
+      | First Name             | TestName                   |
+      | Last Name              | TestSurname                |
       | Password               | demotest                   |
-      | Date of Birth          | 19-6-1991                  |
-      | Company                | AMD                        |
-      | Address                | Blvd. Bajram Curri         |
+      | Date of Birth          | 12-2-1991                  |
+      | Company                | TestCompany                |
+      | Address                | Test Street                |
       | City                   | Tirane                     |
       | State                  | Alabama                    |
       | Zip                    | 36310                      |
       | Additional Information | Hello there this is a test |
-      | Mobile Phone           | 0355695664446              |
+      | Mobile Phone           | 00355696969696             |
     And The register should be successful
 
 
